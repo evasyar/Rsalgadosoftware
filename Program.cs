@@ -16,10 +16,10 @@ namespace Rdr2ModManager
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            using (procAdminLaunch adm = new procAdminLaunch())
-            {
-                adm.AdminRelauncher();
-            }
+            //using (procAdminLaunch adm = new procAdminLaunch())
+            //{
+            //    adm.AdminRelauncher();
+            //}
 
         }
     }
