@@ -58,7 +58,6 @@ namespace Rdr2ModManager.Helper
             if (!IsRunAsAdmin())
             {
                 ProcessStartInfo proc = new ProcessStartInfo();
-                proc.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.UseShellExecute = true;
                 proc.WorkingDirectory = Environment.CurrentDirectory;
                 proc.FileName = Assembly.GetEntryAssembly().CodeBase;

@@ -12,7 +12,7 @@ namespace Rdr2ModManager
     {
         public Form1()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             using (targetCrud crud = new targetCrud())
             {
@@ -291,26 +291,46 @@ namespace Rdr2ModManager
             {
                 using (modFileCrud crud = new modFileCrud())
                 {
-                    var mods = crud.Get().FindAll(row => row.ModId.ToLower() == (comboBox1.SelectedItem as modSource).Id.ToLower() && !string.IsNullOrWhiteSpace(row.DestOneLevel));
-                    foreach (var item in mods)
+                    using (LogFactory log = new LogFactory())
                     {
-                        string _dir = System.IO.Path.Combine(textBox1.Text, item.DestOneLevel);
-                        System.IO.File.Delete(System.IO.Path.Combine(_dir, item.FileName));
-                        if (!string.IsNullOrWhiteSpace(item.DestOneLevel)) System.IO.Directory.Delete(_dir, true);
-                        using (LogFactory log = new LogFactory())
+                        var mods = crud.Get().FindAll(row => row.ModId.ToLower() == (comboBox1.SelectedItem as modSource).Id.ToLower() && !string.IsNullOrWhiteSpace(row.DestOneLevel));
+                        foreach (var item in mods)
                         {
-                            log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            string _dir = System.IO.Path.Combine(textBox1.Text, item.DestOneLevel);
+                            try
+                            {
+                                System.IO.File.Delete(System.IO.Path.Combine(_dir, item.FileName));
+                                log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
+                            try
+                            {
+                                if (!string.IsNullOrWhiteSpace(item.DestOneLevel)) System.IO.Directory.Delete(_dir, true);
+                                log.infoLog(string.Format("Subdirectory {0} deleted from destination: {1}", _dir, textBox1.Text));
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
+                        }
+                        mods = crud.Get().FindAll(row => row.ModId.ToLower() == (comboBox1.SelectedItem as modSource).Id.ToLower() && string.IsNullOrWhiteSpace(row.DestOneLevel));
+                        foreach (var item in mods)
+                        {
+                            try
+                            {
+                                System.IO.File.Delete(System.IO.Path.Combine(textBox1.Text, item.FileName));
+                                log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
                         }
                     }
-                    mods = crud.Get().FindAll(row => row.ModId.ToLower() == (comboBox1.SelectedItem as modSource).Id.ToLower() && string.IsNullOrWhiteSpace(row.DestOneLevel));
-                    foreach (var item in mods)
-                    {
-                        System.IO.File.Delete(System.IO.Path.Combine(textBox1.Text, item.FileName));
-                        using (LogFactory log = new LogFactory())
-                        {
-                            log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
-                        }
-                    }
+
                 }
             }
             catch (Exception ex)
@@ -486,24 +506,42 @@ namespace Rdr2ModManager
             {
                 using (modFileCrud crud = new modFileCrud())
                 {
-                    var mods = crud.Get().FindAll(row => !string.IsNullOrWhiteSpace(row.DestOneLevel));
-                    foreach (var item in mods)
+                    using (LogFactory log = new LogFactory())
                     {
-                        string _dir = System.IO.Path.Combine(textBox1.Text, item.DestOneLevel);
-                        System.IO.File.Delete(System.IO.Path.Combine(_dir, item.FileName));
-                        if (!string.IsNullOrWhiteSpace(item.DestOneLevel)) System.IO.Directory.Delete(_dir, true);
-                        using (LogFactory log = new LogFactory())
+                        var mods = crud.Get().FindAll(row => !string.IsNullOrWhiteSpace(row.DestOneLevel));
+                        foreach (var item in mods)
                         {
-                            log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            string _dir = System.IO.Path.Combine(textBox1.Text, item.DestOneLevel);
+                            try
+                            {
+                                System.IO.File.Delete(System.IO.Path.Combine(_dir, item.FileName));
+                                log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
+                            try
+                            {
+                                if (!string.IsNullOrWhiteSpace(item.DestOneLevel)) System.IO.Directory.Delete(_dir, true);
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
                         }
-                    }
-                    mods = crud.Get().FindAll(row => string.IsNullOrWhiteSpace(row.DestOneLevel));
-                    foreach (var item in mods)
-                    {
-                        System.IO.File.Delete(System.IO.Path.Combine(textBox1.Text, item.FileName));
-                        using (LogFactory log = new LogFactory())
+                        mods = crud.Get().FindAll(row => string.IsNullOrWhiteSpace(row.DestOneLevel));
+                        foreach (var item in mods)
                         {
-                            log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            try
+                            {
+                                System.IO.File.Delete(System.IO.Path.Combine(textBox1.Text, item.FileName));
+                                log.infoLog(string.Format("File {0} deleted from destination: {1}", item.FileName, textBox1.Text));
+                            }
+                            catch (Exception ex)
+                            {
+                                log.errLog(ex.Message);
+                            }
                         }
                     }
                 }

@@ -11,15 +11,16 @@ namespace Rdr2ModManager
         /// </summary>
         [STAThread]
         static void Main()
-        {
+        {            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
+
             using (procAdminLaunch adm = new procAdminLaunch())
             {
                 adm.AdminRelauncher();
             }
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
         }
     }
 }
