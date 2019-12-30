@@ -31,7 +31,7 @@ namespace Rdr2ModManager
                 comboBox1.SelectedIndex = -1;
             }
 
-            TabPageHelper.AddModRoot(modsTab);
+            TabPageHelper.AddStart(modsTab);
         }
 
         private void button1_Click(object sender, EventArgs e)

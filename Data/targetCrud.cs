@@ -43,6 +43,14 @@ namespace Rdr2ModManager.Data
                 using (var db = new LiteDatabase(@"Rdr2ModsDB"))
                 {
                     var targets = db.GetCollection<target>("targets");
+                    //  before deleting target, delete relating mods
+                    using (modSourceCrud msc = new modSourceCrud())
+                    {
+                        foreach (var item in msc.Get().Where(ms => ms.TargetId == _target.Id))
+                        {
+                            msc.Del(item);
+                        }
+                    }
                     targets.Delete(elem => elem.Id == _target.Id);
                 }
             }

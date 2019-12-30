@@ -13,5 +13,6 @@ namespace Rdr2ModManager.Data
         public string Root { get; set; }
         public string Version { get; set; }
         public DateTime ReleaseDate { get; set; }
+        public string TargetId { get; set; }
     }
 }

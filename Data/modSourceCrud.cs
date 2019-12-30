@@ -43,18 +43,13 @@ namespace Rdr2ModManager.Data
                     LogFactory log = new LogFactory();
                     log.infoLog("Posting a new mod source");
                     var mods = db.GetCollection<modSource>("mods");
-                    foreach (var item in mods.FindAll().ToList())
-                    {
-                        if (_mod.Name.ToLower().Equals(item.Name.ToLower()))
-                            mods.Delete(item.Id);
-                    }
                     _mod.Id = Guid.NewGuid().ToString();
                     _mod.creationDate = DateTime.Now;
                     _mod.modifiedDate = DateTime.Now;
                     _mod.modifiedBy = UserHelper.GetWinUser();
                     mods.Insert(_mod);
 
-                    retval.Add(_mod);
+                    retval = Get();
                     log.infoLog("Posting completed for new mod source");
                 }
             }
@@ -78,11 +73,15 @@ namespace Rdr2ModManager.Data
                     LogFactory log = new LogFactory();
                     log.infoLog(string.Format("Deleting mod source {0}", _mod.Name));
                     var mods = db.GetCollection<modSource>("mods");
-                    foreach (var item in mods.FindAll().ToList())
+                    //  first delete all relating mod files
+                    using (modFileCrud mfCrud = new modFileCrud())
                     {
-                        if (_mod.Name.ToLower().Equals(item.Name.ToLower()))
-                            mods.Delete(item.Id);
+                        foreach (var item in mfCrud.Get().Where(mfid => mfid.ModId == _mod.Id))
+                        {
+                            mfCrud.Del(item);
+                        }
                     }
+                    mods.Delete(mid => mid.Id == _mod.Id);
                     log.infoLog(string.Format("Mod source {0} deleted", _mod.Name));
                 }
             }

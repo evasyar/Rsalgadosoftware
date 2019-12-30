@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
-using System.Windows.Shell;
 
 namespace Rdr2ModManager.Helper
 {
@@ -137,28 +136,57 @@ namespace Rdr2ModManager.Helper
         public static void AddModRoot(TabControl host)
         {
             RemoveModRoot(host);
-            TabPage _tb = new TabPage("mod root");
-            _tb.Controls.Add(new ucTargetMod(host));
-            host.TabPages.Add(_tb);
+            host.TabPages.Add("mod root", "mod root");
+            host.TabPages["mod root"].Controls.Add(new ucTargetMod(host));
         }
 
         public static void RemoveModRoot(TabControl host)
         {
             using (LogFactory log = new LogFactory())
             {
-                foreach (var item in host.TabPages)
+                if (host.TabPages.ContainsKey("mod root"))
                 {
-                    foreach (var item2 in ((TabPage)item).Controls)
-                    {
-                        if (item2 is ucTargetMod)
-                        {
-                            host.TabPages.Remove((TabPage)item);
-                            host.TabPages[host.SelectedIndex].Dispose();
-                            log.infoLog("Mod target page removed");
-                            break;
-                        }
-                    }
-                }                
+                    host.TabPages["mod root"].Dispose();
+                    log.infoLog("Mod target page removed");
+                }
+            }
+        }
+
+        public static void AddStart(TabControl host)
+        {
+            RemoveStart(host);
+            host.TabPages.Add("start page", "start page");
+            host.TabPages["start page"].Controls.Add(new ucStartPage(host));
+        }
+
+        public static void RemoveStart(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("start page"))
+                {
+                    host.TabPages["start page"].Dispose();
+                    log.infoLog("Start page removed");
+                }
+            }
+        }
+
+        public static void AddMods(TabControl host, target _target)
+        {
+            RemoveMods(host);
+            host.TabPages.Add("mods", "mods");
+            host.TabPages["mods"].Controls.Add(new ucMods(host, _target));
+        }
+
+        public static void RemoveMods(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("mods"))
+                {
+                    host.TabPages["mods"].Dispose();
+                    log.infoLog("Mods page removed");
+                }
             }
         }
     }

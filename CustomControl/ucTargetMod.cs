@@ -146,5 +146,10 @@ namespace Rdr2ModManager.CustomControl
                 }
             }
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            TabPageHelper.AddMods(tcParent, selectedTarget);
+        }
     }
 }
