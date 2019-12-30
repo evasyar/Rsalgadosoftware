@@ -21,6 +21,8 @@ namespace Rdr2ModManager.CustomControl
 
         private void button2_Click(object sender, System.EventArgs e)
         {
+            TabPageHelper.RemoveModFiles(tcParent);
+            TabPageHelper.RemoveMods(tcParent);
             TabPageHelper.RemoveModRoot(tcParent);
         }
 

@@ -22,6 +22,7 @@ namespace Rdr2ModManager.CustomControl
 
         private void button2_Click(object sender, System.EventArgs e)
         {
+            TabPageHelper.RemoveModFiles(tcParent);
             TabPageHelper.RemoveMods(tcParent);
         }
 
@@ -136,6 +137,11 @@ namespace Rdr2ModManager.CustomControl
                     log.errLog(ex.Message);
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            TabPageHelper.AddModFiles(tcParent, SelectedModSource);
         }
     }
 }

@@ -119,6 +119,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomControl\ucModFiles.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControl\ucModFiles.Designer.cs">
+      <DependentUpon>ucModFiles.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\ucMods.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +164,9 @@
     <Compile Include="Helper\Ext.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CustomControl\ucModFiles.resx">
+      <DependentUpon>ucModFiles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\ucMods.resx">
       <DependentUpon>ucMods.cs</DependentUpon>
     </EmbeddedResource>

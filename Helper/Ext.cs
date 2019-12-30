@@ -189,5 +189,24 @@ namespace Rdr2ModManager.Helper
                 }
             }
         }
+
+        public static void AddModFiles(TabControl host, modSource ms)
+        {
+            RemoveModFiles(host);
+            host.TabPages.Add("mod files", "mod files");
+            host.TabPages["mod files"].Controls.Add(new ucModFiles(host, ms));
+        }
+
+        public static void RemoveModFiles(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("mod files"))
+                {
+                    host.TabPages["mod files"].Dispose();
+                    log.infoLog("Mod file page removed");
+                }
+            }
+        }
     }
 }
