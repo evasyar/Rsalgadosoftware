@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Rdr2ModManager.CustomControl;
+using Rdr2ModManager.Data;
+using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Reflection;
@@ -127,6 +129,37 @@ namespace Rdr2ModManager.Helper
         public static string GetWinUser()
         {
             return System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        }
+    }
+
+    public static class TabPageHelper
+    {
+        public static void AddModRoot(TabControl host)
+        {
+            RemoveModRoot(host);
+            TabPage _tb = new TabPage("mod root");
+            _tb.Controls.Add(new ucTargetMod(host));
+            host.TabPages.Add(_tb);
+        }
+
+        public static void RemoveModRoot(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                foreach (var item in host.TabPages)
+                {
+                    foreach (var item2 in ((TabPage)item).Controls)
+                    {
+                        if (item2 is ucTargetMod)
+                        {
+                            host.TabPages.Remove((TabPage)item);
+                            host.TabPages[host.SelectedIndex].Dispose();
+                            log.infoLog("Mod target page removed");
+                            break;
+                        }
+                    }
+                }                
+            }
         }
     }
 }

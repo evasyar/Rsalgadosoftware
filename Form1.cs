@@ -1,4 +1,5 @@
-﻿using Rdr2ModManager.Data;
+﻿using Rdr2ModManager.CustomControl;
+using Rdr2ModManager.Data;
 using Rdr2ModManager.Helper;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,8 @@ namespace Rdr2ModManager
                 comboBox1.ValueMember = "Id";
                 comboBox1.SelectedIndex = -1;
             }
+
+            TabPageHelper.AddModRoot(modsTab);
         }
 
         private void button1_Click(object sender, EventArgs e)

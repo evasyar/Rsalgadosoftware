@@ -6,5 +6,6 @@ namespace Rdr2ModManager.Data
     {
         public string Id { get; set; }
         public string root { get; set; }
+        public string rootName { get; set; }
     }
 }

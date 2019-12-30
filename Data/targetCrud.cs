@@ -10,24 +10,20 @@ namespace Rdr2ModManager.Data
     {
         public List<target> Post(target _target)
         {
-            var retval = new List<target>();
+            var retval = Get();
             try
             {
                 using (var db = new LiteDatabase(@"Rdr2ModsDB"))
                 {
                     var targets = db.GetCollection<target>("targets");
-                    var dataAll = targets.FindAll().ToList();
-                    foreach (var item in targets.FindAll().ToList())
-                    {
-                        targets.Delete(item.Id);
-                    }
                     _target.Id = Guid.NewGuid().ToString();
                     _target.creationDate = DateTime.Now;
                     _target.modifiedBy = UserHelper.GetWinUser();
                     _target.modifiedDate = DateTime.Now;
+                    if (targets.Exists(e => e.root == _target.root)) throw new Exception("Mod target already exist");
+                    if (targets.Exists(e => e.rootName == _target.rootName)) throw new Exception("Mod target already exist");
                     targets.Insert(_target);
-
-                    retval.Add(_target);
+                    retval = Get();
                 }
             }
             catch (Exception ex)
@@ -38,6 +34,25 @@ namespace Rdr2ModManager.Data
                 }
             }
             return retval;
+        }
+
+        public void Delete(target _target)
+        {
+            try
+            {
+                using (var db = new LiteDatabase(@"Rdr2ModsDB"))
+                {
+                    var targets = db.GetCollection<target>("targets");
+                    targets.Delete(elem => elem.Id == _target.Id);
+                }
+            }
+            catch (Exception ex)
+            {
+                using (LogFactory log = new LogFactory())
+                {
+                    log.errLog(ex.Message);
+                }
+            }
         }
 
         public List<target> Get()
