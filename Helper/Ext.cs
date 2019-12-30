@@ -208,5 +208,43 @@ namespace Rdr2ModManager.Helper
                 }
             }
         }
+
+        public static void AddLogs(TabControl host)
+        {
+            RemoveLogs(host);
+            host.TabPages.Add("logs", "logs");
+            host.TabPages["logs"].Controls.Add(new ucLogs(host));
+        }
+
+        public static void RemoveLogs(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("logs"))
+                {
+                    host.TabPages["logs"].Dispose();
+                    log.infoLog("Log page removed");
+                }
+            }
+        }
+
+        public static void AddTargetDBView(TabControl host)
+        {
+            RemoveTargetDBView(host);
+            host.TabPages.Add("targetdbview", "targetdbview");
+            host.TabPages["targetdbview"].Controls.Add(new ucTargetDBView(host));
+        }
+
+        public static void RemoveTargetDBView(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("targetdbview"))
+                {
+                    host.TabPages["targetdbview"].Dispose();
+                    log.infoLog("Target DB View page removed");
+                }
+            }
+        }
     }
 }
