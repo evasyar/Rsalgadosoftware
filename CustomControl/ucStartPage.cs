@@ -36,5 +36,15 @@ namespace Rdr2ModManager.CustomControl
         {
             TabPageHelper.AddTargetDBView(tcParent);
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            TabPageHelper.AddModSourceDBView(tcParent);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            TabPageHelper.AddModFileDBView(tcParent);
+        }
     }
 }

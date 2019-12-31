@@ -6,26 +6,25 @@ using System.Windows.Forms;
 
 namespace Rdr2ModManager.CustomControl
 {
-    public partial class ucTargetDBView : UserControl
+    public partial class ucModSourceDBView : UserControl
     {
         public TabControl tcParent { get; set; }
         public BindingSource cachedBindingSource { get; set; }
-        public ucTargetDBView(TabControl tcContainer)
+        public ucModSourceDBView(TabControl tcContainer)
         {
             InitializeComponent();
-
             tcParent = tcContainer;
-            using (targetCrud tc = new targetCrud())
+            using (modSourceCrud msc = new modSourceCrud())
             {
                 cachedBindingSource = new BindingSource();
-                cachedBindingSource.DataSource = tc.Get().OrderByDescending(dt => dt.creationDate);
+                cachedBindingSource.DataSource = msc.Get().OrderByDescending(dt => dt.creationDate);
                 dataGridView1.DataSource = cachedBindingSource;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            TabPageHelper.RemoveTargetDBView(tcParent);
-        }        
+            TabPageHelper.RemoveModSourceDBView(tcParent);
+        }
     }
 }

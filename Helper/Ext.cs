@@ -137,6 +137,7 @@ namespace Rdr2ModManager.Helper
         {
             RemoveModRoot(host);
             host.TabPages.Add("mod root", "mod root");
+            host.SelectedTab = host.TabPages["mod root"];
             host.TabPages["mod root"].Controls.Add(new ucTargetMod(host));
         }
 
@@ -150,12 +151,14 @@ namespace Rdr2ModManager.Helper
                     log.infoLog("Mod target page removed");
                 }
             }
+            host.SelectedTab = host.TabPages["start page"];
         }
 
         public static void AddStart(TabControl host)
         {
             RemoveStart(host);
             host.TabPages.Add("start page", "start page");
+            host.SelectedTab = host.TabPages["start page"];
             host.TabPages["start page"].Controls.Add(new ucStartPage(host));
         }
 
@@ -175,6 +178,7 @@ namespace Rdr2ModManager.Helper
         {
             RemoveMods(host);
             host.TabPages.Add("mods", "mods");
+            host.SelectedTab = host.TabPages["mods"];
             host.TabPages["mods"].Controls.Add(new ucMods(host, _target));
         }
 
@@ -188,12 +192,14 @@ namespace Rdr2ModManager.Helper
                     log.infoLog("Mods page removed");
                 }
             }
+            host.SelectedTab = host.TabPages["mod root"];
         }
 
         public static void AddModFiles(TabControl host, modSource ms)
         {
             RemoveModFiles(host);
             host.TabPages.Add("mod files", "mod files");
+            host.SelectedTab = host.TabPages["mod files"];
             host.TabPages["mod files"].Controls.Add(new ucModFiles(host, ms));
         }
 
@@ -207,12 +213,14 @@ namespace Rdr2ModManager.Helper
                     log.infoLog("Mod file page removed");
                 }
             }
+            host.SelectedTab = host.TabPages["mods"];
         }
 
         public static void AddLogs(TabControl host)
         {
             RemoveLogs(host);
             host.TabPages.Add("logs", "logs");
+            host.SelectedTab = host.TabPages["logs"];
             host.TabPages["logs"].Controls.Add(new ucLogs(host));
         }
 
@@ -226,12 +234,14 @@ namespace Rdr2ModManager.Helper
                     log.infoLog("Log page removed");
                 }
             }
+            host.SelectedTab = host.TabPages["start page"];
         }
 
         public static void AddTargetDBView(TabControl host)
         {
             RemoveTargetDBView(host);
             host.TabPages.Add("targetdbview", "targetdbview");
+            host.SelectedTab = host.TabPages["targetdbview"];
             host.TabPages["targetdbview"].Controls.Add(new ucTargetDBView(host));
         }
 
@@ -245,6 +255,49 @@ namespace Rdr2ModManager.Helper
                     log.infoLog("Target DB View page removed");
                 }
             }
+            host.SelectedTab = host.TabPages["start page"];
+        }
+
+        public static void AddModSourceDBView(TabControl host)
+        {
+            RemoveModSourceDBView(host);
+            host.TabPages.Add("modsourcedbview", "modsourcedbview");
+            host.SelectedTab = host.TabPages["modsourcedbview"];
+            host.TabPages["modsourcedbview"].Controls.Add(new ucModSourceDBView(host));
+        }
+
+        public static void RemoveModSourceDBView(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("modsourcedbview"))
+                {
+                    host.TabPages["modsourcedbview"].Dispose();
+                    log.infoLog("ModSource DB View page removed");
+                }
+            }
+            host.SelectedTab = host.TabPages["start page"];
+        }
+
+        public static void AddModFileDBView(TabControl host)
+        {
+            RemoveModFileDBView(host);
+            host.TabPages.Add("modfiledbview", "modfiledbview");
+            host.SelectedTab = host.TabPages["modfiledbview"];
+            host.TabPages["modfiledbview"].Controls.Add(new ucModFileDBView(host));
+        }
+
+        public static void RemoveModFileDBView(TabControl host)
+        {
+            using (LogFactory log = new LogFactory())
+            {
+                if (host.TabPages.ContainsKey("modfiledbview"))
+                {
+                    host.TabPages["modfiledbview"].Dispose();
+                    log.infoLog("ModFile DB View page removed");
+                }
+            }
+            host.SelectedTab = host.TabPages["start page"];
         }
     }
 }

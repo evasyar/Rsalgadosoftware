@@ -125,6 +125,12 @@
     <Compile Include="CustomControl\ucLogs.Designer.cs">
       <DependentUpon>ucLogs.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomControl\ucModFileDBView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControl\ucModFileDBView.Designer.cs">
+      <DependentUpon>ucModFileDBView.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomControl\ucModFiles.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -136,6 +142,12 @@
     </Compile>
     <Compile Include="CustomControl\ucMods.Designer.cs">
       <DependentUpon>ucMods.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomControl\ucModSourceDBView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomControl\ucModSourceDBView.Designer.cs">
+      <DependentUpon>ucModSourceDBView.cs</DependentUpon>
     </Compile>
     <Compile Include="CustomControl\ucStartPage.cs">
       <SubType>UserControl</SubType>
@@ -179,11 +191,17 @@
     <EmbeddedResource Include="CustomControl\ucLogs.resx">
       <DependentUpon>ucLogs.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CustomControl\ucModFileDBView.resx">
+      <DependentUpon>ucModFileDBView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\ucModFiles.resx">
       <DependentUpon>ucModFiles.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\ucMods.resx">
       <DependentUpon>ucMods.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomControl\ucModSourceDBView.resx">
+      <DependentUpon>ucModSourceDBView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CustomControl\ucStartPage.resx">
       <DependentUpon>ucStartPage.cs</DependentUpon>
