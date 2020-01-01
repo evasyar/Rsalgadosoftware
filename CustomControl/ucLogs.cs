@@ -17,18 +17,12 @@ namespace Rdr2ModManager.CustomControl
             tcParent = tcContainer;
             RefreshLogs();
             toolTip1.SetToolTip(button2, "Exit Logs");
-            toolTip1.SetToolTip(button1, "Refresh Logs");
             toolTip1.SetToolTip(button3, "Search Logs");
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             TabPageHelper.RemoveLogs(tcParent);
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            RefreshLogs();
         }
 
         private void RefreshLogs()
@@ -45,18 +39,27 @@ namespace Rdr2ModManager.CustomControl
 
         private void button3_Click(object sender, EventArgs e)
         {
-            using (Prompt pt = new Prompt("Enter your keyword to search under", "Searching logs database"))
+            using (LogFactory lf = new LogFactory())
             {
-                var res = pt.Result;
-                using (LogFactory lf = new LogFactory())
+                cachedBindingSource = new BindingSource();
+                if (!string.IsNullOrWhiteSpace(textBox1.Text))
                 {
-                    cachedBindingSource = new BindingSource();
                     cachedBindingSource.DataSource = lf.getLog()
-                        .Where(rst => Convert.ToString(rst.Id).ToLower().Contains(res.ToLower()) ||  rst.Log.ToLower().Contains(res.ToLower()) || rst.LogType.ToLower().Contains(res.ToLower()) || rst.modifiedBy.ToLower().Contains(res.ToLower()))
+                        .Where(rst => Convert.ToString(rst.Id).Contains(textBox1.Text) || 
+                        rst.Log.ToLower().Contains(textBox1.Text.ToLower()) || 
+                        rst.LogType.ToLower().Contains(textBox1.Text.ToLower()) || 
+                        rst.modifiedBy.ToLower().Contains(textBox1.Text.ToLower()) || 
+                        rst.creationDate.ToShortDateString().Contains(textBox1.Text))
                         .Take(100)
                         .OrderByDescending(dt => dt.creationDate);
-                    dataGridView1.DataSource = cachedBindingSource;
                 }
+                else
+                {
+                    cachedBindingSource.DataSource = lf.getLog()
+                        .Take(100)
+                        .OrderByDescending(dt => dt.creationDate);
+                }
+                dataGridView1.DataSource = cachedBindingSource;
             }
         }
     }
