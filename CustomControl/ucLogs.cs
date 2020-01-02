@@ -18,6 +18,7 @@ namespace Rdr2ModManager.CustomControl
             RefreshLogs();
             toolTip1.SetToolTip(button2, "Exit Logs");
             toolTip1.SetToolTip(button3, "Search Logs");
+            toolTip1.SetToolTip(textBox1, "Enter a search keyword");
         }
 
         private void button2_Click(object sender, EventArgs e)
