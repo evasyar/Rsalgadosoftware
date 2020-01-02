@@ -3,6 +3,7 @@ using Rdr2ModManager.Data;
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -128,6 +129,23 @@ namespace Rdr2ModManager.Helper
         public static string GetWinUser()
         {
             return System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+        }
+    }
+
+    public static class FileFolderHelper
+    {
+        public static bool IsChildFolder(string child, string parent)
+        {
+            bool retval = false;
+            //  detect if sub folder
+            //  get the sub folder name then assign to appropriate data property
+            DirectoryInfo childDir = new DirectoryInfo(child);
+            DirectoryInfo parentDir = new DirectoryInfo(parent);
+            if (new DirectoryInfo(child).Name.ToLower() != new DirectoryInfo(parent).Name.ToLower())
+            {
+                retval = true;
+            }
+            return retval;
         }
     }
 

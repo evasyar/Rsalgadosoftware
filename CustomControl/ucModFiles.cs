@@ -83,10 +83,10 @@ namespace Rdr2ModManager.CustomControl
                             using (modFileCrud crud = new modFileCrud())
                             {
                                 foreach (var item in openFileDialog.FileNames)
-                                {
+                                {                                    
                                     crud.Post(new modFile()
                                     {
-                                        DestOneLevel = (!string.IsNullOrWhiteSpace(textBox4.Text)) ? textBox4.Text : null,
+                                        DestOneLevel = (FileFolderHelper.IsChildFolder(Path.GetDirectoryName(item), ModSrc.Root)) ? new DirectoryInfo(Path.GetDirectoryName(item)).Name : null,
                                         FileName = Path.GetFileName(item),
                                         ModId = ModSrc.Id,
                                         Source = item
@@ -144,7 +144,6 @@ namespace Rdr2ModManager.CustomControl
                 {
                     crud.Post(new modFile()
                     {
-                        DestOneLevel = (!string.IsNullOrWhiteSpace(textBox4.Text)) ? textBox4.Text : null,
                         FileName = textBox3.Text,
                         ModId = ModSrc.Id,
                         Source = System.IO.Path.Combine(ModSrc.Root, textBox3.Text)

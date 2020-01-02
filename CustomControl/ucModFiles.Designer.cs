@@ -30,18 +30,16 @@
         {
             this.button2 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button16 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.button4 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -64,8 +62,6 @@
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button10);
             this.groupBox2.Controls.Add(this.dataGridView2);
@@ -76,16 +72,6 @@
             this.groupBox2.TabIndex = 16;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "MOD FILE MAP";
-            // 
-            // button16
-            // 
-            this.button16.Location = new System.Drawing.Point(114, 19);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(66, 27);
-            this.button16.TabIndex = 19;
-            this.button16.Text = "remove all";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // button5
             // 
@@ -113,42 +99,6 @@
             this.label1.TabIndex = 16;
             this.label1.Text = "Custom File";
             // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(124, 78);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(622, 20);
-            this.textBox4.TabIndex = 15;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 81);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 13);
-            this.label3.TabIndex = 14;
-            this.label3.Text = "Root Child Folder";
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(60, 19);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(52, 27);
-            this.button13.TabIndex = 12;
-            this.button13.Text = "remove";
-            this.button13.UseVisualStyleBackColor = true;
-            this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(6, 19);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(52, 27);
-            this.button12.TabIndex = 11;
-            this.button12.Text = "apply";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
             // button11
             // 
             this.button11.Location = new System.Drawing.Point(153, 19);
@@ -174,9 +124,9 @@
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView2.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllHeaders;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(6, 104);
+            this.dataGridView2.Location = new System.Drawing.Point(6, 81);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.Size = new System.Drawing.Size(740, 244);
+            this.dataGridView2.Size = new System.Drawing.Size(740, 267);
             this.dataGridView2.TabIndex = 7;
             // 
             // button4
@@ -189,6 +139,36 @@
             this.button4.Text = "Select the files";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(114, 19);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(66, 27);
+            this.button16.TabIndex = 19;
+            this.button16.Text = "remove all";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(60, 19);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(52, 27);
+            this.button13.TabIndex = 12;
+            this.button13.Text = "remove";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(6, 19);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(52, 27);
+            this.button12.TabIndex = 11;
+            this.button12.Text = "apply";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // groupBox1
             // 
@@ -228,8 +208,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
