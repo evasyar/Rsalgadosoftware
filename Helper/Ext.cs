@@ -139,13 +139,16 @@ namespace Rdr2ModManager.Helper
             bool retval = false;
             //  detect if sub folder
             //  get the sub folder name then assign to appropriate data property
-            DirectoryInfo childDir = new DirectoryInfo(child);
-            DirectoryInfo parentDir = new DirectoryInfo(parent);
             if (new DirectoryInfo(child).Name.ToLower() != new DirectoryInfo(parent).Name.ToLower())
             {
                 retval = true;
             }
             return retval;
+        }
+
+        public static string GetChildFolder(string child, string parent)
+        {
+            return (IsChildFolder(child, parent)) ? new DirectoryInfo(child).Name : string.Empty;
         }
     }
 

@@ -86,7 +86,7 @@ namespace Rdr2ModManager.CustomControl
                                 {                                    
                                     crud.Post(new modFile()
                                     {
-                                        DestOneLevel = (FileFolderHelper.IsChildFolder(Path.GetDirectoryName(item), ModSrc.Root)) ? new DirectoryInfo(Path.GetDirectoryName(item)).Name : null,
+                                        DestOneLevel = FileFolderHelper.GetChildFolder(Path.GetDirectoryName(item), ModSrc.Root),
                                         FileName = Path.GetFileName(item),
                                         ModId = ModSrc.Id,
                                         Source = item
@@ -169,10 +169,7 @@ namespace Rdr2ModManager.CustomControl
                     var mods = crud.Get().FindAll(row => row.ModId.ToLower() == ModSrc.Id.ToLower() && !string.IsNullOrWhiteSpace(row.DestOneLevel));
                     foreach (var item in mods)
                     {
-                        if (!System.IO.Directory.Exists(System.IO.Path.Combine(ModTarget.root, item.DestOneLevel)))
-                        {
-                            System.IO.Directory.CreateDirectory(System.IO.Path.Combine(ModTarget.root, item.DestOneLevel));
-                        }
+                        System.IO.Directory.CreateDirectory(System.IO.Path.Combine(ModTarget.root, item.DestOneLevel));
                         string _dir = System.IO.Path.Combine(ModTarget.root, item.DestOneLevel);
                         System.IO.File.Copy(item.Source, System.IO.Path.Combine(_dir, item.FileName), true);
                         using (LogFactory log = new LogFactory())
