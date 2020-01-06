@@ -14,12 +14,7 @@ namespace Rdr2ModManager.CustomControl
         {
             InitializeComponent();
             tcParent = tcContainer;
-            using (modSourceCrud msc = new modSourceCrud())
-            {
-                cachedBindingSource = new BindingSource();
-                cachedBindingSource.DataSource = msc.Get().OrderByDescending(dt => dt.creationDate);
-                dataGridView1.DataSource = cachedBindingSource;
-            }
+            GridViewHelper.GridLoader(dataGridView1, "mod");
         }
 
         private void button2_Click(object sender, EventArgs e)

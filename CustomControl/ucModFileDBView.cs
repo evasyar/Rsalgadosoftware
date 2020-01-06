@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Data;
-using System.Linq;
 using System.Windows.Forms;
-using Rdr2ModManager.Data;
 using Rdr2ModManager.Helper;
 
 namespace Rdr2ModManager.CustomControl
@@ -15,12 +12,7 @@ namespace Rdr2ModManager.CustomControl
         {
             InitializeComponent();
             tcParent = tcContainer;
-            using (modFileCrud mfc = new modFileCrud())
-            {
-                cachedBindingSource = new BindingSource();
-                cachedBindingSource.DataSource = mfc.Get().OrderByDescending(dt => dt.creationDate);
-                dataGridView1.DataSource = cachedBindingSource;
-            }
+            GridViewHelper.GridLoader(dataGridView1, "modfile");
         }
 
         private void button2_Click(object sender, EventArgs e)

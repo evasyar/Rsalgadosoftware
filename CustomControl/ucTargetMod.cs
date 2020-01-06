@@ -64,17 +64,12 @@ namespace Rdr2ModManager.CustomControl
         {
             using (LogFactory log = new LogFactory())
             {
-                using (targetCrud crud = new targetCrud())
+                GridViewHelper.GridLoader(dataGridView1, "target");
+                log.infoLog("Mod target cache refreshed");
+                if (dataGridView1.Rows.Count > 0)
                 {
-                    cachedBindingSource = new BindingSource();
-                    cachedBindingSource.DataSource = crud.Get().OrderByDescending(elem => elem.creationDate); 
-                    dataGridView1.DataSource = cachedBindingSource;
-                    log.infoLog("Mod target cache refreshed");
-                    if (dataGridView1.Rows.Count > 0)
-                    {
-                        dataGridView1.Rows[0].Selected = true;
-                        log.infoLog("1st Mod target selected");
-                    }
+                    dataGridView1.Rows[0].Selected = true;
+                    log.infoLog("1st Mod target selected");
                 }
             }
         }
@@ -131,9 +126,7 @@ namespace Rdr2ModManager.CustomControl
                     try
                     {
                         crud.Delete(selectedTarget);
-                        cachedBindingSource = new BindingSource();
-                        cachedBindingSource.DataSource = crud.Get().OrderByDescending(elem => elem.creationDate); 
-                        dataGridView1.DataSource = cachedBindingSource;
+                        GridViewHelper.GridLoader(dataGridView1, "target");
                         log.infoLog("Mod target deleted");
                         if (dataGridView1.Rows.Count > 0)
                         {

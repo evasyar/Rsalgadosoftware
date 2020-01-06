@@ -362,5 +362,32 @@ namespace Rdr2ModManager.Helper
                 (_gridView as DataGridView).DataSource = cachedBindingSource;
             }
         }
+
+        public static void GridLoader(object gridViewObj, string sourceName)
+        {            
+            switch (sourceName.ToLowerInvariant())
+            {
+                case "modfile":
+                    using (modFileCrud mfc = new modFileCrud())
+                    {
+                        (gridViewObj as DataGridView).DataSource = new BindingSource() { DataSource = mfc.Get().OrderByDescending(dt => dt.creationDate) };
+                    }
+                    break;
+                case "mod":
+                    using (modSourceCrud msc = new modSourceCrud())
+                    {
+                        (gridViewObj as DataGridView).DataSource = new BindingSource() { DataSource = msc.Get().OrderByDescending(dt => dt.creationDate) };
+                    }
+                    break;
+                case "target":
+                    using (targetCrud tc = new targetCrud())
+                    {
+                        (gridViewObj as DataGridView).DataSource = new BindingSource() { DataSource = tc.Get().OrderByDescending(dt => dt.creationDate) };
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
