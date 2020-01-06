@@ -17,7 +17,6 @@ namespace Rdr2ModManager.CustomControl
             tcParent = tcContainer;
             RefreshLogs();
             toolTip1.SetToolTip(button2, "Exit Logs");
-            toolTip1.SetToolTip(button3, "Search Logs");
             toolTip1.SetToolTip(textBox1, "Enter a search keyword");
         }
 
@@ -37,20 +36,24 @@ namespace Rdr2ModManager.CustomControl
                 dataGridView1.DataSource = cachedBindingSource;
             }
         }
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            updateDatagridviewFromKeyword((sender as TextBox).Text);
+        }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void updateDatagridviewFromKeyword(string keyword)
         {
             using (LogFactory lf = new LogFactory())
             {
                 cachedBindingSource = new BindingSource();
-                if (!string.IsNullOrWhiteSpace(textBox1.Text))
+                if (!string.IsNullOrWhiteSpace(keyword))
                 {
                     cachedBindingSource.DataSource = lf.getLog()
-                        .Where(rst => Convert.ToString(rst.Id).Contains(textBox1.Text) || 
-                        rst.Log.ToLower().Contains(textBox1.Text.ToLower()) || 
-                        rst.LogType.ToLower().Contains(textBox1.Text.ToLower()) || 
-                        rst.modifiedBy.ToLower().Contains(textBox1.Text.ToLower()) || 
-                        rst.creationDate.ToShortDateString().Contains(textBox1.Text))
+                        .Where(rst => Convert.ToString(rst.Id).Contains(keyword) ||
+                        rst.Log.ToLower().Contains(keyword.ToLower()) ||
+                        rst.LogType.ToLower().Contains(keyword.ToLower()) ||
+                        rst.modifiedBy.ToLower().Contains(keyword.ToLower()) ||
+                        rst.creationDate.ToShortDateString().Contains(keyword))
                         .Take(100)
                         .OrderByDescending(dt => dt.creationDate);
                 }
