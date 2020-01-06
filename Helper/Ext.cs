@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Principal;
 using System.Windows.Forms;
@@ -319,6 +320,47 @@ namespace Rdr2ModManager.Helper
                 }
             }
             host.SelectedTab = host.TabPages["start page"];
+        }
+    }
+
+    public static class GridViewHelper
+    {
+        public static void RefreshLogs(object _gridView)
+        {
+            using (LogFactory lf = new LogFactory())
+            {
+                BindingSource cachedBindingSource = new BindingSource();
+                cachedBindingSource.DataSource = lf.getLog()
+                    .Take(100)
+                    .OrderByDescending(dt => dt.creationDate);
+                (_gridView as DataGridView).DataSource = cachedBindingSource;
+            }
+        }
+
+        public static void RefreshLogsFromKeyword(object _gridView, string keyword)
+        {
+            using (LogFactory lf = new LogFactory())
+            {
+                BindingSource cachedBindingSource = new BindingSource();
+                if (!string.IsNullOrWhiteSpace(keyword))
+                {
+                    cachedBindingSource.DataSource = lf.getLog()
+                        .Where(rst => Convert.ToString(rst.Id).Contains(keyword) ||
+                        rst.Log.ToLower().Contains(keyword.ToLower()) ||
+                        rst.LogType.ToLower().Contains(keyword.ToLower()) ||
+                        rst.modifiedBy.ToLower().Contains(keyword.ToLower()) ||
+                        rst.creationDate.ToShortDateString().Contains(keyword))
+                        .Take(100)
+                        .OrderByDescending(dt => dt.creationDate);
+                }
+                else
+                {
+                    cachedBindingSource.DataSource = lf.getLog()
+                        .Take(100)
+                        .OrderByDescending(dt => dt.creationDate);
+                }
+                (_gridView as DataGridView).DataSource = cachedBindingSource;
+            }
         }
     }
 }

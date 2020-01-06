@@ -1,7 +1,5 @@
-﻿using Rdr2ModManager.Data;
-using Rdr2ModManager.Helper;
+﻿using Rdr2ModManager.Helper;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Rdr2ModManager.CustomControl
@@ -15,7 +13,7 @@ namespace Rdr2ModManager.CustomControl
             InitializeComponent();
 
             tcParent = tcContainer;
-            RefreshLogs();
+            GridViewHelper.RefreshLogs(dataGridView1);
             toolTip1.SetToolTip(button2, "Exit Logs");
             toolTip1.SetToolTip(textBox1, "Enter a search keyword");
         }
@@ -25,17 +23,6 @@ namespace Rdr2ModManager.CustomControl
             TabPageHelper.RemoveLogs(tcParent);
         }
 
-        private void RefreshLogs()
-        {
-            using (LogFactory lf = new LogFactory())
-            {
-                cachedBindingSource = new BindingSource();
-                cachedBindingSource.DataSource = lf.getLog()
-                    .Take(100)
-                    .OrderByDescending(dt => dt.creationDate);
-                dataGridView1.DataSource = cachedBindingSource;
-            }
-        }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             updateDatagridviewFromKeyword((sender as TextBox).Text);
@@ -43,28 +30,7 @@ namespace Rdr2ModManager.CustomControl
 
         private void updateDatagridviewFromKeyword(string keyword)
         {
-            using (LogFactory lf = new LogFactory())
-            {
-                cachedBindingSource = new BindingSource();
-                if (!string.IsNullOrWhiteSpace(keyword))
-                {
-                    cachedBindingSource.DataSource = lf.getLog()
-                        .Where(rst => Convert.ToString(rst.Id).Contains(keyword) ||
-                        rst.Log.ToLower().Contains(keyword.ToLower()) ||
-                        rst.LogType.ToLower().Contains(keyword.ToLower()) ||
-                        rst.modifiedBy.ToLower().Contains(keyword.ToLower()) ||
-                        rst.creationDate.ToShortDateString().Contains(keyword))
-                        .Take(100)
-                        .OrderByDescending(dt => dt.creationDate);
-                }
-                else
-                {
-                    cachedBindingSource.DataSource = lf.getLog()
-                        .Take(100)
-                        .OrderByDescending(dt => dt.creationDate);
-                }
-                dataGridView1.DataSource = cachedBindingSource;
-            }
+            GridViewHelper.RefreshLogsFromKeyword(dataGridView1, keyword);
         }
     }
 }
