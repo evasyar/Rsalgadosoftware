@@ -51,17 +51,19 @@ namespace Rdr2ModManager.CustomControl
                             throw new Exception(string.Format("Mod name {0} already exists", textBox1.Text));
                         }
                         relDate = (DateTime.TryParse(textBox4.Text, out relDate)) ? relDate : DateTime.Now;
-                        cachedBindingSource = new BindingSource();
-                        cachedBindingSource.DataSource = crud.Post(new modSource()
+                        var rst = crud.Post(new modSource()
                         {
-                            Name = textBox1.Text,
+                            Name = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(textBox1.Text.ToLower()),
                             Root = textBox2.Text,
                             Version = textBox3.Text,
                             ReleaseDate = relDate,
                             TargetId = TargetMod.Id
                         });
-                        cachedBindingSource.DataSource = crud.Get().Where(tid => tid.TargetId == TargetMod.Id).OrderByDescending(dt => dt.creationDate);
-                        dataGridView1.DataSource = cachedBindingSource;
+                        dataGridView1.DataSource = new BindingSource() { 
+                            DataSource = crud.Get()
+                            .Where(tid => tid.TargetId == TargetMod.Id)
+                            .OrderByDescending(dt => dt.creationDate) 
+                        };
                         log.infoLog("New mod posted");
                         if (dataGridView1.Rows.Count > 0)
                         {
@@ -119,11 +121,10 @@ namespace Rdr2ModManager.CustomControl
                 {
                     using (modSourceCrud crud = new modSourceCrud())
                     {
-                        cachedBindingSource = new BindingSource();
-                        cachedBindingSource.DataSource = crud.Get()
+                        dataGridView1.DataSource = new BindingSource() { DataSource = crud.Get()
                             .Where(tid => tid.TargetId == TargetMod.Id)
-                            .OrderByDescending(dt => dt.creationDate);
-                        dataGridView1.DataSource = cachedBindingSource;
+                            .OrderByDescending(dt => dt.creationDate)
+                        };
                         log.infoLog(string.Format("Mods listed for mod target {0}", TargetMod.Id));
                         if (dataGridView1.Rows.Count > 0)
                         {

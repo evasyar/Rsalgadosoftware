@@ -1,7 +1,6 @@
 ﻿using Rdr2ModManager.Data;
 using System.Windows.Forms;
 using System;
-using System.Linq;
 using Rdr2ModManager.Helper;
 
 namespace Rdr2ModManager.CustomControl
@@ -9,7 +8,6 @@ namespace Rdr2ModManager.CustomControl
     public partial class ucTargetMod : UserControl
     {
         public TabControl tcParent { get; set; }
-        public BindingSource cachedBindingSource { get; set; }
         public target selectedTarget { get; set; }
         public ucTargetMod(TabControl tcContainer)
         {
@@ -30,17 +28,12 @@ namespace Rdr2ModManager.CustomControl
         {
             using (LogFactory log = new LogFactory())
             {
-                using (targetCrud crud = new targetCrud())
+                GridViewHelper.GridLoader(dataGridView1, "target");
+                log.infoLog("Mod target loaded into cache");
+                if (dataGridView1.Rows.Count > 0)
                 {
-                    cachedBindingSource = new BindingSource();
-                    cachedBindingSource.DataSource = crud.Get().OrderByDescending(elem => elem.creationDate);
-                    dataGridView1.DataSource = cachedBindingSource;
-                    log.infoLog("Mod target loaded into cache");
-                    if (dataGridView1.Rows.Count > 0)
-                    {
-                        dataGridView1.Rows[0].Selected = true;
-                        log.infoLog("1st Mod target selected");
-                    }
+                    dataGridView1.Rows[0].Selected = true;
+                    log.infoLog("1st Mod target selected");
                 }
             }
         }
@@ -84,16 +77,11 @@ namespace Rdr2ModManager.CustomControl
                     {
                         if (string.IsNullOrWhiteSpace(textBox1.Text)) throw new Exception("Root location cannot be empty");
                         if (string.IsNullOrWhiteSpace(textBox2.Text)) throw new Exception("Root name cannot be empty");
-                        crud.Post(new target() { 
-                            rootName = textBox2.Text, root = textBox1.Text
-                        });
-                        cachedBindingSource = new BindingSource();
-                        cachedBindingSource.DataSource = crud.Post(new target()
-                        {
-                            rootName = textBox2.Text,
+                        var rst = crud.Post(new target() { 
+                            rootName = System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(textBox2.Text.ToLower()), 
                             root = textBox1.Text
-                        }).OrderByDescending(ord => ord.creationDate); 
-                        dataGridView1.DataSource = cachedBindingSource;
+                        });
+                        GridViewHelper.GridLoader(dataGridView1, "target");
                         log.infoLog("New mod target posted");
                         if (dataGridView1.Rows.Count > 0)
                         {

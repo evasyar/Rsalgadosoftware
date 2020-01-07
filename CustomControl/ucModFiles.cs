@@ -12,7 +12,6 @@ namespace Rdr2ModManager.CustomControl
         public TabControl tcParent { get; set; }
         public modSource ModSrc { get; set; }
         public target ModTarget { get; set; }
-        public BindingSource cachedBindingSource { get; set; }
         public ucModFiles(TabControl tcContainer, modSource ms)
         {
             InitializeComponent();
@@ -39,11 +38,11 @@ namespace Rdr2ModManager.CustomControl
                 {
                     using (modFileCrud crud = new modFileCrud())
                     {
-                        cachedBindingSource = new BindingSource();
-                        cachedBindingSource.DataSource = crud.Get()
+                        dataGridView2.DataSource = new BindingSource() { 
+                            DataSource = crud.Get()
                             .Where(tid => tid.ModId == ModSrc.Id)
-                            .OrderByDescending(dt => dt.creationDate);
-                        dataGridView2.DataSource = cachedBindingSource;
+                            .OrderByDescending(dt => dt.creationDate)
+                        };
                         log.infoLog(string.Format("Mod files listed for mod source {0}", ModSrc.Id));
                         if (dataGridView2.Rows.Count > 0)
                         {
